@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+a:hover {
+    transition: all ease-in-out 300ms;
+    opacity: 0.65;
+}
