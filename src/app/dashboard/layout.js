@@ -4,7 +4,7 @@ const DashboardLayout = ({ children }) => {
   return (
     <>
       <div className="flex">
-        <div className="w-48">
+        <div className="w-60">
           <Sidebar />
         </div>
         <main className="w-full bg-indigo-50 px-4 py-10">{children}</main>
