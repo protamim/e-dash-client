@@ -1,11 +1,22 @@
 "use client";
 import { Table, Thead, Tbody, Tr, Th, Td } from "@chakra-ui/react";
+import axios from "axios";
 import Image from "next/image";
-import GetProducts from "@/utils/GetProducts";
+import { useEffect, useState } from "react";
 
-const ProductsList = async() => {
-  const products = await GetProducts();
-  
+const ProductsList = async () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    // Fetching data by axios in the client only
+    axios
+      .get("https://e-dash-server.vercel.app/products")
+      .then((res) => {
+        setProducts(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
       <h4 className="text-3xl font-semibold mb-6">Product Lists</h4>
@@ -14,7 +25,9 @@ const ProductsList = async() => {
           <Thead>
             <Tr>
               <Th fontSize="1.1rem">Product Name</Th>
-              <Th font Size="1.1rem">Price</Th>
+              <Th font Size="1.1rem">
+                Price
+              </Th>
               <Th fontSize="1.1rem">Quantity</Th>
             </Tr>
           </Thead>

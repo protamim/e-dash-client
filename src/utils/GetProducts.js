@@ -1,6 +1,6 @@
 import axios from "axios";
 const GetProducts = async () => {
-  // fetching data by axios
+  // fetching data by axios in the server
   try {
     const res = await axios.get("https://e-dash-server.vercel.app/products");
     return res.data;
