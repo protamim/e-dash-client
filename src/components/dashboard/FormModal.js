@@ -47,7 +47,7 @@ const FormModal = ({ onOpen, isOpen, onClose, selectedProduct }) => {
 
     // Product Update request
     axios
-      .put(`http://localhost:5000/products/${_id}`, {
+      .put(`https://e-dash-server.vercel.app/products/${_id}`, {
         ...currentItem,
       })
       .then((res) => {
