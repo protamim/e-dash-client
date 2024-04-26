@@ -2,8 +2,6 @@ import HomeBanner from "@/components/home/banner";
 import Features from "@/components/home/featurs";
 import NewArrivals from "@/components/home/newArrivals";
 import MainHeader from "@/components/shared/Header";
-
-
 const HomePage = () => {
   return (
     <>

@@ -5,9 +5,9 @@ import { useContext } from "react";
 import { AuthContext } from "@/providers/AuthProvider";
 
 const MainHeader = () => {
-const {user}= useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
-console.log(user);
+  console.log(user);
 
   return (
     <header>
@@ -18,14 +18,22 @@ console.log(user);
           {/* NAV LINKS */}
           <ul className="flex items-center gap-x-8">
             <li>
-              <Link href="#">Home</Link>
+              <Link href="/">Home</Link>
             </li>
-            <li>
-              <Link href="/register">Register</Link>
-            </li>
-            <li>
-              <Link href="/dashboard">Dashboard</Link>
-            </li>
+            {user && (
+              <li>
+                <Link href="/dashboard">Dashboard</Link>
+              </li>
+            )}
+            {user ? (
+              <li>
+                <button>Log Out</button>
+              </li>
+            ) : (
+              <li>
+                <Link href="/register">Login/Register</Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>
