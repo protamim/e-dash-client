@@ -1,6 +1,7 @@
 import { Overpass } from "next/font/google";
 import "./globals.css";
 import Chakra from "@/providers/Chakra";
+import AuthProvider from "@/providers/AuthProvider";
 
 const overpass = Overpass({ subsets: ["latin"] });
 
@@ -10,10 +11,15 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
   return (
     <html lang="en">
       <body className={overpass.className}>
-        <Chakra>{children}</Chakra>
+        <AuthProvider>
+          <Chakra>
+            {children}
+          </Chakra>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -11,7 +11,7 @@ import Image from "next/image";
 const Features = () => {
   return (
     <>
-      <div className="flex items-center justify-center gap-x-6 gap-y-6 flex-wrap">
+      <div className="flex items-center justify-center gap-x-6 gap-y-6 flex-wrap mb-16">
         {FEATURES_DATA.map((item) => (
           <div
             key={item.id}
