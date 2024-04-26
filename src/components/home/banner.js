@@ -78,6 +78,8 @@ const HomeBanner = () => {
           ))}
         </Slider>
       </div>
+      {/* auth */}
+      <div className="phone-auth-container hidden"></div>
     </>
   );
 };
