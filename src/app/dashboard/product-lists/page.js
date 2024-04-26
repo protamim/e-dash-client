@@ -1,6 +1,5 @@
 "use client";
 import FormModal from "@/components/dashboard/FormModal";
-import {  AuthContext } from "@/providers/AuthProvider";
 import {
   Table,
   Thead,
@@ -13,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
@@ -22,8 +21,6 @@ const ProductsList = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedProduct, setSelectedProduct] = useState("init");
 
-  const {user} = useContext(AuthContext);
-  console.log(user);
 
   const handleUpdateProduct = (id) => {
     // Fetching selected product

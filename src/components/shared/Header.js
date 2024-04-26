@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
-import React, { useContext } from "react";
 import SiteLogo from "../home/SiteLogo";
+import { useContext } from "react";
 import { AuthContext } from "@/providers/AuthProvider";
 
 const MainHeader = () => {
-  const { user } = useContext(AuthContext);
+const {user}= useContext(AuthContext);
+
+console.log(user);
 
   return (
     <header>
@@ -21,11 +23,9 @@ const MainHeader = () => {
             <li>
               <Link href="/register">Register</Link>
             </li>
-            {user && (
-              <li>
-                <Link href="/dashboard">Dashboard</Link>
-              </li>
-            )}
+            <li>
+              <Link href="/dashboard">Dashboard</Link>
+            </li>
           </ul>
         </div>
       </nav>

@@ -14,6 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { PrimaryBtn } from "../common/buttons/Buttons";
 import axios from "axios";
+import Swal from "sweetalert2";
+
 
 const FormModal = ({ onOpen, isOpen, onClose, selectedProduct }) => {
   const {
@@ -46,19 +48,42 @@ const FormModal = ({ onOpen, isOpen, onClose, selectedProduct }) => {
     };
 
     // Product Update request
-    axios
-      .put(`https://e-dash-server.vercel.app/products/${_id}`, {
-        ...currentItem,
-      })
-      .then((res) => {
-        if (res.data.modifiedCount > 0) {
-          alert(`${product_name} updated successfully!`);
-          form.reset();
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, update it!",
+      customClass: {
+        container: '!z-[999999999999]'
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .put(`https://e-dash-server.vercel.app/products/${_id}`, {
+            ...currentItem,
+          })
+          .then((res) => {
+            if (res.data.modifiedCount > 0) {
+              form.reset();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        // fire success
+        Swal.fire({
+          title: "updated!",
+          text: `${product_name} updated successfully!`,
+          icon: "success",
+          customClass: {
+            container: '!z-[999999999999]'
+          }
+        });
+      }
+    });
   };
 
   return (
@@ -120,7 +145,7 @@ const FormModal = ({ onOpen, isOpen, onClose, selectedProduct }) => {
               </FormControl>
             </ModalBody>
             <ModalFooter>
-              <PrimaryBtn type="submit" className="mr-4">
+              <PrimaryBtn onClick={onClose} type="submit" className="mr-4">
                 Update
               </PrimaryBtn>
               <PrimaryBtn onClick={onClose}>Cancel</PrimaryBtn>

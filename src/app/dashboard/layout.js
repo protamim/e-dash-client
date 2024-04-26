@@ -4,14 +4,10 @@ import SiteLogo from "@/components/home/SiteLogo";
 import {
   Drawer,
   DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
   useDisclosure,
-  Button,
-  Input,
 } from "@chakra-ui/react";
 import { MdDashboardCustomize } from "react-icons/md";
 

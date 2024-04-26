@@ -2,6 +2,7 @@
 import { PrimaryBtn } from "@/components/common/buttons/Buttons";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
 
 const AddProducts = () => {
   const {
@@ -21,7 +22,11 @@ const AddProducts = () => {
         { ...data }
       );
       if (response.data.insertedId) {
-        alert(`${product_name} added successfully!`);
+        Swal.fire({
+          title: 'Added',
+          text: `${product_name} has been added successfully!`,
+          icon: 'success'
+        });
         reset();
       }
     } catch (error) {

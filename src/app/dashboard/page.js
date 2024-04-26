@@ -15,7 +15,6 @@ const Dashboard = async () => {
           </CardBody>
         </Card>
       </div>
-      <div className="phone-auth-container hidden"></div>
     </>
   );
 };
