@@ -48,7 +48,7 @@ firebase.initializeApp(firebaseConfig);
 
     ui.start(".phone-auth-container", {
       signInOptions: [firebase.auth.PhoneAuthProvider.PROVIDER_ID],
-      signInSuccessUrl: 'http://localhost:3000/'
+      signInSuccessUrl: 'https://e-dash-client.vercel.app/'
     });
   }, []);
 
