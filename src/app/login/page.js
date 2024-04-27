@@ -1,90 +1,68 @@
 "use client";
 import { PrimaryBtn } from "@/components/common/buttons/Buttons";
+import MainHeader from "@/components/shared/Header";
 import { AuthContext } from "@/providers/AuthProvider";
 import { FormControl, FormLabel, Input } from "@chakra-ui/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
 import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
-import MainHeader from "@/components/shared/Header";
-import Link from "next/link";
+import Swal from "sweetalert2";
 
-const UserRegisterPage = () => {
+const LoginPage = () => {
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { user, createAccount, userProfile, setReload } =
-    useContext(AuthContext);
-
+  const { logIn, user } = useContext(AuthContext);
+  const router = useRouter();
   const [isPassShow, setIsPassShow] = useState(false);
+console.log(router);
 
   const onSubmit = (data) => {
-    const { password, email, user_name } = data;
+    const { password, email } = data;
 
     // register a user using firebase
-    createAccount(email, password)
+    logIn(email, password)
       .then((userCredentials) => {
         Swal.fire({
-          title: `${data.user_name}`,
-          text: " Thanks for register here!",
+          position: "top-end",
           icon: "success",
-          customClass: {
-            title: "!text-green-500",
-          },
+          title: "Logged In Successfully!",
+          showConfirmButton: false,
+          timer: 1000,
         });
         console.log(userCredentials);
+        router.push('/');
         // clear the form
         reset();
-
-        // Update a user's profile
-        userProfile({
-          displayName: user_name,
-        })
-          .then(() => {
-            setReload(true);
-            console.log("Profile updated");
-          })
-          .catch((err) => {
-            console.error(err);
-          });
       })
       .catch((err) => {
         console.log(err);
         Swal.fire({
-          icon: "error",
-          title: "Oops...",
-          text: "Something went wrong!",
-        });
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+          });
       });
   };
 
+  console.log(user);
+
   return (
     <>
-    <MainHeader />
+      <MainHeader />
+      {/* Login Form */}
       <div className="flex items-center justify-center p-7 mt-11 ">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col items-center gap-y-4 p-8 bg-slate-100 rounded-lg sm:min-w-[435px]"
         >
-          <h3 className="text-2xl font-semibold">User Registration Form</h3>
-          <FormControl>
-            <FormLabel>Your Name</FormLabel>
-            <Input
-              type="text"
-              {...register("user_name", {
-                required: true,
-              })}
-              className={`${errors.user_name && "!border !border-red-500"}`}
-            />
-            {errors.user_name && (
-              <p className="text-red-500 mt-2 text-sm">
-                This field is required!
-              </p>
-            )}
-          </FormControl>
+          <h3 className="text-2xl font-semibold">Login to your account</h3>
+
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input
@@ -141,11 +119,12 @@ const UserRegisterPage = () => {
             )}
           </FormControl>
           {/* Register */}
-          <PrimaryBtn className="mt-4" type="submit">Register Now</PrimaryBtn>
-          {/* Register Footer */}
+          <PrimaryBtn className="mt-4" type="submit">Login</PrimaryBtn>
+
+          {/* Login Footer */}
           <div className="mt-6 flex items-center justify-center gap-x-3 flex-wrap gap-y-2">
             <p>Don't have an account? </p>
-            <Link href="/login" className="text-green-600 transition-all ease-in-out duration-300 hover:text-blue-700 hover:bg-indigo-200">Login here</Link>
+            <Link href="/register" className="text-green-600 transition-all ease-in-out duration-300 hover:text-blue-700 hover:bg-indigo-200">Register here</Link>
           </div>
         </form>
       </div>
@@ -153,4 +132,4 @@ const UserRegisterPage = () => {
   );
 };
 
-export default UserRegisterPage;
+export default LoginPage;

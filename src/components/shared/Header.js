@@ -3,11 +3,38 @@ import Link from "next/link";
 import SiteLogo from "../home/SiteLogo";
 import { useContext } from "react";
 import { AuthContext } from "@/providers/AuthProvider";
+import Swal from "sweetalert2";
 
 const MainHeader = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
 
-  console.log(user);
+  const handleLogOut = () => {
+    logOut()
+      .then((res) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Logged Out",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+      });
+  };
+
+  const handleRouteClick = () => {
+    if (!user) {
+      Swal.fire("Please Log In first before continue browsing!");
+    }
+  };
 
   return (
     <header>
@@ -17,21 +44,21 @@ const MainHeader = () => {
           <SiteLogo />
           {/* NAV LINKS */}
           <ul className="flex items-center gap-x-8">
-            <li>
+            <li onClick={handleRouteClick}>
               <Link href="/">Home</Link>
             </li>
             {user && (
-              <li>
+              <li onClick={handleRouteClick}>
                 <Link href="/dashboard">Dashboard</Link>
               </li>
             )}
             {user ? (
-              <li>
+              <li onClick={handleLogOut}>
                 <button>Log Out</button>
               </li>
             ) : (
-              <li>
-                <Link href="/register">Login/Register</Link>
+              <li onClick={handleRouteClick}>
+                <Link href="/login">Login/Register</Link>
               </li>
             )}
           </ul>
