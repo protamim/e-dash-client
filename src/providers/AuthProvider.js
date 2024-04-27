@@ -49,7 +49,7 @@ const logIn = (email, password)=> {
   }, [reload]);
 
 
-  const authInfo = { user, loading, createAccount, setReload, userProfile, logOut, logIn};
+  const authInfo = { user, loading, reload, createAccount, setReload, userProfile, logOut, logIn};
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

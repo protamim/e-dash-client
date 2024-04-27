@@ -20,7 +20,7 @@ const LoginPage = () => {
   const { logIn, user } = useContext(AuthContext);
   const router = useRouter();
   const [isPassShow, setIsPassShow] = useState(false);
-console.log(router);
+
 
   const onSubmit = (data) => {
     const { password, email } = data;
@@ -35,7 +35,7 @@ console.log(router);
           showConfirmButton: false,
           timer: 1000,
         });
-        console.log(userCredentials);
+        // console.log(userCredentials);
         router.push('/');
         // clear the form
         reset();
@@ -50,7 +50,7 @@ console.log(router);
       });
   };
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <>

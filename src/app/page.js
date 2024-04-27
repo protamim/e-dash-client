@@ -4,15 +4,21 @@ import Features from "@/components/home/featurs";
 import NewArrivals from "@/components/home/newArrivals";
 import MainHeader from "@/components/shared/Header";
 import { AuthContext } from "@/providers/AuthProvider";
+import { CircularProgress } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { useContext } from "react";
 const HomePage = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const router = useRouter();
 
-  if (!user) {
-    router.push("/login");
+  if (loading) {
+    return <CircularProgress isIndeterminate color="green.300" className="!h-screen !flex !items-start !justify-center !w-full" />;
   }
+
+  if (!user) {
+    return router.push("/login");
+  }
+
   return (
     <>
       <MainHeader />

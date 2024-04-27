@@ -15,13 +15,14 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
+import Swal from "sweetalert2";
 
 const ProductsList = () => {
   const [products, setProducts] = useState([]);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedProduct, setSelectedProduct] = useState("init");
 
-
+  // updates selected product
   const handleUpdateProduct = (id) => {
     // Fetching selected product
     axios
@@ -44,6 +45,36 @@ const ProductsList = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  // Delete the selected product
+  const handleDeleteProduct = (id) => {
+    // console.log(id);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`https://e-dash-server.vercel.app/products/${id}`, id)
+          .then((res) => {
+            console.log(res.data);
+            if (res.data.deletedCount === 1) {
+              Swal.fire({
+                title: "Deleted!",
+                text: `Product has been deleted.`,
+                icon: "success",
+              });
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    });
+  };
 
   return (
     <>
@@ -68,7 +99,7 @@ const ProductsList = () => {
             </Thead>
             <Tbody>
               {products.map((item) => (
-                <Tr key={item.id}>
+                <Tr key={item._id}>
                   <Td>
                     <div className="flex items-center gap-x-2">
                       <Image
@@ -91,16 +122,21 @@ const ProductsList = () => {
                   </Td>
                   {/* action */}
                   <Td textAlign="center">
-                    <div className="flex items-center gap-x-4">
+                    <div className="flex items-center gap-x-7">
+                      {/* update action */}
                       <button
                         onClick={() => handleUpdateProduct(item._id)}
                         className="text-2xl font-semibold transition-all ease-in-out duration-300 hover:text-green-500"
                       >
                         <span>{<FaEdit />}</span>
                       </button>
-                      <span className="text-2xl font-semibold">
+                      {/* Delete action */}
+                      <button
+                        onClick={() => handleDeleteProduct(item._id)}
+                        className="text-2xl font-semibold transition-all ease-in-out duration-300 hover:text-green-500"
+                      >
                         {<RiDeleteBinLine />}
-                      </span>
+                      </button>
                     </div>
                   </Td>
                 </Tr>

@@ -28,12 +28,12 @@ const DashboardLayout = ({ children }) => {
         </div>
 
         {/* sidebar */}
-        <div className="hidden md:min-w-60 md:block">
+        <div className="hidden md:min-w-60 md:block fixed top-0 left-0 h-screen">
           <Sidebar />
         </div>
 
         {/* main content */}
-        <main className="w-full bg-indigo-50 px-4 pt-28 h-screen md:pt-6 md:w-[calc(100%-240px)]">
+        <main className="w-full bg-indigo-50 px-4 pt-28 h-auto min-h-screen md:pt-6 md:w-[calc(100%-240px)] ml-auto">
           {children}
         </main>
       </div>
